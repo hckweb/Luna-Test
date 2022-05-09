@@ -15,6 +15,9 @@ public:
     I2c(GPIO_no sda, GPIO_no scl, I2c_mode type, uint32_t speed, bool sda_pull_up, bool scl_pull_up);
     I2c(I2c&) = delete; // copy constructor is deleted
 
+    void start();
+    void stop();
+
     uint8_t read_byte();
 
     void write_byte(uint8_t command);
