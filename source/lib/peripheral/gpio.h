@@ -12,6 +12,9 @@ public:
     void write(GPIO_status status);
     void toogle();
 
+    void set();
+    void clear();
+
     GPIO_mode get_mode();
     GPIO_pull_state get_pull_state();
     GPIO_state get_state();
