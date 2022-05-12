@@ -24,6 +24,15 @@ public:
     ipv4_t get_ipv4();
     ipv6_t get_ipv6();
 
+    void add_tcp_connection(TCP&);
+    void remove_tcp_connection(TCP&);
+
+    void add_udp_connection(UDP&);
+    void remove_udp_connection(UDP&);
+
+    void add_http_connection(HTTPRequest&);
+    void remove_http_connection(HTTPRequest&);
+
 private:
     std::unique_ptr<Uart> _uart;
     std::unique_ptr<std::vector<TCP>> _tcps;
