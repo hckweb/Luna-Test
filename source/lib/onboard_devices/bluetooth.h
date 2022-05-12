@@ -4,6 +4,7 @@
 #include "../peripheral/uart.h"
 
 #include <memory>
+#include <vector>
 
 typedef struct {
     uint8_t Uuid_byte1;
@@ -48,7 +49,7 @@ public:
     void add_characteristic(BLECharacteristic&);
 
 private:
-    std::unique_ptr<BLECharacteristic[]> _characterics;
+    std::unique_ptr<std::vector<BLECharacteristic>> _characterics;
 };
 
 class BLEGATTServer {
@@ -58,7 +59,7 @@ public:
     void add_service(BLEService&);
 
 private:
-    std::unique_ptr<BLEService[]> _services;
+    std::unique_ptr<std::vector<BLEService>> _services;
 };
 
 class Bluetooth {
@@ -74,7 +75,7 @@ public:
 
 private:
     std::unique_ptr<Uart> _uart;
-    std::unique_ptr<BLEGATTServer[]> _gattservices;
+    std::unique_ptr<std::vector<BLEGATTServer>> _gattservices;
 };
 
 #endif
