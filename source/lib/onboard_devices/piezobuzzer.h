@@ -5,8 +5,15 @@
 
 #include <memory>
 
+/**
+ * @brief Piezo buzzer management class
+ */
 class PiezoBuzzer {
 public:
+    /**
+     * @brief Constructer of piezo buzzer class
+     * @param buzzer Buzzer pin no
+     */
     PiezoBuzzer(GPIO_no buzzer)
     {
         _buzzer = std::make_unique<Gpio>(buzzer, GPIO_mode::OUTPUT);
@@ -14,8 +21,19 @@ public:
     }
     PiezoBuzzer(const PiezoBuzzer&) = delete; // copy constructor is deleted
 
+    /**
+     * @brief Ring the buzzer
+     */
     void ring();
+
+    /**
+     * @brief Ring the buzzer for time_ms miliseconds
+     */
     void ring(uint32_t time_ms);
+
+    /**
+     * @brief Stop the buzzer
+     */
     void stop();
 
 private:

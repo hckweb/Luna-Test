@@ -8,6 +8,9 @@
 #include <string>
 #include <vector>
 
+/**
+ * @brief Encryption Protocol struct. Use NONE, WEP, WPA, WPA2 or AUTO
+ */
 enum class EncryptionProtocol {
     NONE,
     WEP,
@@ -16,8 +19,16 @@ enum class EncryptionProtocol {
     AUTO,
 };
 
+/**
+ * @brief WiFi management class
+ */
 class Wifi {
 public:
+    /**
+     * @brief Constructor of WiFi class
+     * @param tx tx pin of module
+     * @param rx rx pin of module
+     */
     Wifi(GPIO_no tx, GPIO_no rx)
     {
         _uart = std::make_unique<Uart>(tx, rx, 115200);
@@ -25,20 +36,71 @@ public:
     }
     Wifi(const Wifi&) = delete; // copy constructor is deleted
 
+    /**
+     * @brief Connect a network over WiFi
+     * @param ssid SSID name
+     * @param pass Password
+     * @param protocol Encryption protocol
+     */
     void connect(std::string ssid, std::string pass, EncryptionProtocol protocol = EncryptionProtocol::AUTO);
+
+    /**
+     * @brief Disonnect from network
+     */
     void disconnect();
 
+    /**
+     * @brief Write a buffer for selected pin
+     * @return true if it's connected else return false
+     */
     bool is_connected();
+
+    /**
+     * @brief Get current IPv4
+     * @return IPv4
+     */
     ipv4_t get_ipv4();
+
+    /**
+     * @brief Get current IPv6
+     * @return IPv6
+     */
     ipv6_t get_ipv6();
 
+    /**
+     * @brief Add TCP connection
+     * @param TCP TCP object
+     */
     void add_tcp_connection(TCP&);
+
+    /**
+     * @brief Remove TCP connection
+     * @param TCP TCP object
+     */
     void remove_tcp_connection(TCP&);
 
+    /**
+     * @brief Add UDP connection
+     * @param UDP UDP object
+     */
     void add_udp_connection(UDP&);
+
+    /**
+     * @brief Remove UDP connection
+     * @param UDP TCP object
+     */
     void remove_udp_connection(UDP&);
 
+    /**
+     * @brief Add HTTP connection
+     * @param HTTPRequest HTTPRequest object
+     */
     void add_http_connection(HTTPRequest&);
+
+    /**
+     * @brief Remove HTTP connection
+     * @param HTTPRequest HTTPRequest object
+     */
     void remove_http_connection(HTTPRequest&);
 
 private:

@@ -6,6 +6,9 @@
 #include <memory>
 #include <vector>
 
+/**
+ * @brief 128bit UUID struct
+ */
 typedef struct {
     uint8_t Uuid_byte1;
     uint8_t Uuid_byte2;
@@ -25,6 +28,9 @@ typedef struct {
     uint8_t Uuid_byte16;
 } BLEUuid;
 
+/**
+ * @brief GATT permission struct
+ */
 enum class BLEPermission {
     GATT_PERM_READ_ENCRYPTED,
     GATT_PERM_READ_ENC_MITM,
@@ -37,33 +43,76 @@ enum class BLEPermission {
     GATT_PERM_WRITE_AUTHORIZATION,
 };
 
+/**
+ * @brief BLE Characteristic management class
+ */
 class BLECharacteristic {
 public:
+    /**
+     * @brief Constructer of BLE Characteristic class
+     * @param BLEUuid UUID
+     * @param BLEPermission GATT permission
+     */
     BLECharacteristic(BLEUuid, BLEPermission);
 };
 
+/**
+ * @brief BLE Service management class
+ */
 class BLEService {
 public:
+    /**
+     * @brief Constructer of BLE Service class
+     * @param BLEUuid UUID
+     */
     BLEService(BLEUuid);
 
+    /**
+     * @brief Add a characteristic to current service
+     * @param BLECharacteristic BLE Characteristic
+     */
     void add_characteristic(BLECharacteristic&);
 
 private:
     std::unique_ptr<std::vector<BLECharacteristic>> _characterics;
 };
 
+/**
+ * @brief BLE GATT Server management class
+ */
 class BLEGATTServer {
 public:
+    /**
+     * @brief Constructer of BLE GATT Server constructer
+     * @param BLEUuid UUID
+     */
     BLEGATTServer(BLEUuid);
+
+    /**
+     * @brief Start server
+     */
     void start_server();
+
+    /**
+     * @brief Add a service to current server
+     * @param BLEService BLE Service
+     */
     void add_service(BLEService&);
 
 private:
     std::unique_ptr<std::vector<BLEService>> _services;
 };
 
+/**
+ * @brief BlueTooth management class
+ */
 class Bluetooth {
 public:
+    /**
+     * @brief Constructer of BlueTooth class
+     * @param tx TX pin
+     * @param rx RX pin
+     */
     Bluetooth(GPIO_no tx, GPIO_no rx)
     {
         _uart = std::make_unique<Uart>(tx, rx, 115200);
@@ -71,6 +120,10 @@ public:
     }
     Bluetooth(const Bluetooth&) = delete; // copy constructor is deleted
 
+    /**
+     * @brief Add a server
+     * @param BLEGATTServer BLE GATT Server
+     */
     void add_gatt_server(BLEGATTServer&);
 
 private:
@@ -84,8 +137,6 @@ private:
 // Example
 void func()
 {
-
-
     //server
     //----server1
     //--------characteristic1

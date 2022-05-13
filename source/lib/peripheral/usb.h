@@ -4,9 +4,18 @@
 #include <cstdint>
 #include <iosfwd>
 
+/**
+ * @brief USB management class
+ */
 class Usb {
 public:
+    /**
+     * @brief Constructor of USB object
+     * @param pid PID of USB device
+     * @param vid VID of USB device
+     */
     Usb(uint16_t pid, uint16_t vid);
+
     Usb(const Usb&) = delete; // copy constructor is deleted
 
     // functions for << operator
